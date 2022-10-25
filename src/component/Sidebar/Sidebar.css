@@ -1,0 +1,12 @@
+.sidebar-height{
+height: 91vh;
+}
+
+.sidebar{
+    color:white;
+    background-color: rgb(15 23 42);
+}
+.sidebar:active{
+    color:black;
+    background-color:white;
+}
