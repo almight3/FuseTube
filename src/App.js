@@ -10,14 +10,25 @@ import Watchlater from './pages/WacthLater/Watchlater';
 import History from './pages/History/History';
 import ProtectedRoute from './component/ProtectedRoute/ProtectedRoute';
 import Liked from "./pages/Liked/Liked";
+import { Toaster } from 'react-hot-toast';
+
 function App() {
   return (
     <div className='border-box '>
     <BrowserRouter>
+    <Toaster
+     position="bottom-center"
+     reverseOrder={false}
+     toastOptions={{
+    // Define default options
+      duration: 2000,
+    }}
+    />
        <Navbar />
        <Sidebar />
        <Routes>
-          <Route path="/" element={<Home />} />
+          
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />}/>
           <Route path="/signup" element={<Signup />} />
           <Route element={<ProtectedRoute />}>

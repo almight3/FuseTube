@@ -5,7 +5,7 @@ function Home() {
   return (
     <>
     <Category />
-    <div className='flex flex-wrap justify-around box-border w-10/12 ml-72	'>
+    <div className='flex flex-wrap justify-center box-border w-10/12 ml-72	'>
         <Card />
         <Card />
         <Card />
