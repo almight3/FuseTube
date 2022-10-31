@@ -13,10 +13,8 @@ function Login() {
     const timer = setTimeout(()=>{
     dispatch(clearError); 
     },2000)  
-    if(error){
-     timer();
-    }
-    return clearTimeout(timer);
+    
+    return ()=>clearTimeout(timer);
     },[dispatch,error])
 
   const handleSubmit = (e)=>{

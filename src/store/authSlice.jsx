@@ -17,10 +17,6 @@ const authSlice = createSlice({
     name:'auth',
     initialState,
     reducer:{
-    logoutUser:(state)=>{
-     state.user = null;
-     state.isAuthenticated = false;
-    },    
     clearError:(state)=>{
         state.error = null;
     } 
@@ -53,17 +49,23 @@ const authSlice = createSlice({
      })
      .addCase(loginUser.rejected,(state,action)=>{
         state.status = STATUSES.IDLE;
-        state.isAuthenticated = true;
+        state.isAuthenticated = false;
         state.error = action.payload;
         toast.error(state.error)
 
+     })
+     .addCase(logoutUser.fulfilled,(state,action)=>{
+        state.status = STATUSES.IDLE;
+        state.isAuthenticated = false;
+        state.user = null;
+        toast.success(action.payload.message)
      })
     }
 });
 
 
 export default authSlice.reducer;
-export const { logoutUser,clearError} = authSlice.actions;
+export const {clearError} = authSlice.actions;
 
 export const signupUser = createAsyncThunk("user/signup",async(data,thunkAPI)=>{
    try{
@@ -98,6 +100,16 @@ export const loginUser = createAsyncThunk("login/user",async(data,thunkAPI)=>{
             "Content-Type": "application/json",
         },
      })
+     return res.data
+    }
+    catch(error){
+     return thunkAPI.rejectWithValue(error.response.data.message)       
+    }
+});
+
+export const logoutUser = createAsyncThunk("logout/user",async(thunkAPI)=>{
+    try{
+     const res = await axios.get("http://localhost:5000/api/v1/logout")
      return res.data
     }
     catch(error){

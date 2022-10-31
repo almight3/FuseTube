@@ -11,7 +11,6 @@ import History from './pages/History/History';
 import ProtectedRoute from './component/ProtectedRoute/ProtectedRoute';
 import Liked from "./pages/Liked/Liked";
 import { Toaster } from 'react-hot-toast';
-
 function App() {
   return (
     <div className='border-box '>
