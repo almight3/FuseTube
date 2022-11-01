@@ -10,10 +10,11 @@ import Watchlater from './pages/WacthLater/Watchlater';
 import History from './pages/History/History';
 import ProtectedRoute from './component/ProtectedRoute/ProtectedRoute';
 import Liked from "./pages/Liked/Liked";
+import Video from "./pages/Video/Video";
 import { Toaster } from 'react-hot-toast';
 function App() {
   return (
-    <div className='border-box '>
+    <div className='border-box  scroll-smooth'>
     <BrowserRouter>
     <Toaster
      position="bottom-center"
@@ -30,6 +31,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />}/>
           <Route path="/signup" element={<Signup />} />
+          <Route path="/video/:id" element={<Video />} />
           <Route element={<ProtectedRoute />}>
               <Route path="/history" element={<History />} />
               <Route path="/playlist" element={<Playlist />} />

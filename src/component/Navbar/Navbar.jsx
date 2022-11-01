@@ -9,7 +9,7 @@ function Navbar() {
     dispatch(logoutUser())
   }
   return (
-   <nav className="h-20 box-border p-3 sticky inset-0	bg-slate-900">
+   <nav className="h-20 box-border p-3 fixed	inset-0	bg-slate-900 z-10	">
      <ul className='flex flex-row justify-around text-white'>
         <li className='font-bold text-2xl p-2 ml-9'>
             FuzeTime

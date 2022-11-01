@@ -27,7 +27,7 @@ function Login() {
   return (
     <>
       {status === "loading" ? <p>Loading...</p> :
-      <form className='w-96  bg-slate-900 mx-auto my-40 flex flex-col shadow rounded' onSubmit={handleSubmit}>
+      <form className='w-96  bg-slate-900 mx-auto relative	top-60	flex flex-col shadow rounded' onSubmit={handleSubmit}>
           <h1 className="text-2xl font-bold mt-7  mx-auto text-white">Login</h1>
           <label className='ml-9 m-3 text-white'>Email</label>
           <input type="email" placeholder='Email' className='p-3 w-10/12 mx-auto bg-slate-800 text-white' required onChange={(e)=>setEmail(e.target.value)} />
