@@ -18,6 +18,9 @@ const likeSlice = createSlice({
         error:{}
     },
     reducers:{
+      clearError:(state)=>{
+        state.error = null;
+      }  
 
     },
     extraReducers:(builder)=>{
@@ -65,6 +68,7 @@ const likeSlice = createSlice({
 })
 
 export default likeSlice.reducer;
+export const {clearError} = likeSlice.actions;
 // fetch user liked videos
 export const getUserLikedVideos = createAsyncThunk("user/like",async(thunkAPI)=>{
     try{
