@@ -1,6 +1,5 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { act } from 'react-dom/test-utils';
 import toast from 'react-hot-toast';
 
 export const STATUSES = Object.freeze({
@@ -33,7 +32,6 @@ const historySlice = createSlice({
         .addCase(getUserAllHistory.rejected,(state,action)=>{
             state.status = STATUSES.IDLE;
             state.error = action.payload;
-            toast.error(state.error);
         })
         .addCase(addToUserHisotry.pending,(state)=>{
             state.status = STATUSES.LOADING
@@ -45,7 +43,6 @@ const historySlice = createSlice({
         .addCase(addToUserHisotry.rejected,(state,action)=>{
             state.status =  STATUSES.IDLE;
             state.error = action.payload;
-            toast.error(state.error);
         }) 
         .addCase(removeFromUserHistory.pending,(state)=>{
             state.status = STATUSES.LOADING;
@@ -59,7 +56,21 @@ const historySlice = createSlice({
             state.status = STATUSES.IDLE;
             state.error = action.payload;
             toast.error(state.error)
-        });
+        })
+        .addCase(clearUserHistory.pending,(state)=>{
+            state.status = STATUSES.LOADING;
+        })
+        .addCase(clearUserHistory.fulfilled,(state,action)=>{
+            state.status = STATUSES.IDLE;
+            state.history = action.payload.history;
+            toast.success("all user history cleared")
+        })
+        .addCase(clearUserHistory.rejected,(state,action)=>{
+            state.status = STATUSES.IDLE;
+            state.error = action.payload;
+            toast.error(state.error)
+        })
+        
     }
 });
 
@@ -67,7 +78,14 @@ export default historySlice.reducer;
 export const { clearError } = historySlice.actions;
 export const getUserAllHistory = createAsyncThunk("user/history",async(thunkAPI)=>{
     try{
-        const res = await axios.get("http://localhost:5000/api/v1/user/history");
+        const res = await axios.get("http://localhost:5000/api/v1/user/history",{
+            withCredentials:true  
+        },
+        {
+        headers: {
+            "Content-Type": "application/json",
+          },
+         });
         return res.data;
     }
     catch(error){
@@ -77,9 +95,14 @@ export const getUserAllHistory = createAsyncThunk("user/history",async(thunkAPI)
 
 export const addToUserHisotry = createAsyncThunk("user/addhistory",async(video,thunkAPI)=>{
  try{
+    console.log(video)
     const res = await axios.post("http://localhost:5000/api/v1/user/history",{
     video
-    },{
+    },
+    {
+        withCredentials:true  
+    },
+    {
         headers: {
             "Content-Type": "application/json",
         },
@@ -93,10 +116,35 @@ export const addToUserHisotry = createAsyncThunk("user/addhistory",async(video,t
 
 export const removeFromUserHistory = createAsyncThunk("user/removehisotry",async(id,thunkAPI)=>{
     try{
-    const res = await axios.delete(`http://localhost:5000/api/v1/user/history/${id}`);
+    const res = await axios.delete(`http://localhost:5000/api/v1/user/history/${id}`,{
+        withCredentials:true  
+    },
+    {
+        headers: {
+            "Content-Type": "application/json",
+        },
+     });
     return res.data;
     }
     catch(error){
         return thunkAPI.rejectWithValue(error.response.data.message)  
     }
 });
+
+export const clearUserHistory = createAsyncThunk("user/clearhisotry",async(thunkAPI)=>{
+    try{
+    const res = await axios.delete(`http://localhost:5000/api/v1/user/clear/history`,{
+        withCredentials:true  
+    },
+    {
+        headers: {
+            "Content-Type": "application/json",
+        },
+     });
+    return res.data;
+    }
+    catch(error){
+        return thunkAPI.rejectWithValue(error.response.data.message)  
+    }
+});
+
