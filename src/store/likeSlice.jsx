@@ -40,7 +40,7 @@ const likeSlice = createSlice({
         .addCase(addToUserLiked,(state)=>{
             state.status = STATUSES.LOADING;
         })
-        .addCase(addToUserLiked.fulfilled,(state)=>{
+        .addCase(addToUserLiked.fulfilled,(state,action)=>{
             state.status = STATUSES.IDLE;
             state.like = action.payload.like;
             toast.success("video added to liked");
