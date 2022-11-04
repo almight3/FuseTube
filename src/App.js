@@ -36,7 +36,7 @@ function App() {
               <Route path="/history" element={<History />} />
               <Route path="/playlist" element={<Playlist />} />
               <Route path="/watchlater" element={<Watchlater/>} />
-              <Route path="/liked" element={<Liked/>} />
+              <Route path="/liked" element={<Liked />} />
           </Route>
         </Routes>
     </BrowserRouter>

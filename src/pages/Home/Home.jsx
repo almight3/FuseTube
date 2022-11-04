@@ -4,25 +4,42 @@ import Category from '../../component/Category/Category';
 import {useDispatch,useSelector} from "react-redux";
 import {getAllVideos} from "../../store/videoSlice";
 import { Ring } from '@uiball/loaders';
-
-const filterByCatgory = (data,category)=>{
-  if(category=="All"){
-    return data
-  }
-  let filter = data.filter((video)=>video.category === category)
-  return filter
-}
+import VideoNotFound from '../../component/VideoNotFound/VideoNotFound';
+import { clearSearchQuery } from '../../store/videoSlice';
 
 function Home() {
   const dispatch = useDispatch();
-  const {data,error,status} = useSelector((state)=>state.video);
+  const {data,status,searchQuery} = useSelector((state)=>state.video);
   const [category,setCategory] = useState("All");
+  const [video,setVideo] = useState([]);
   useEffect(()=>{
   dispatch(getAllVideos())
   },[dispatch])
   
-  console.log(category)
-  if(status==="error")
+  useEffect(()=>{
+    
+     if(category==="All"){
+      setVideo(data)
+     }  
+     else{
+     let filter = [];
+     filter = data.filter(video=>video.category === category);
+     setVideo(filter)
+     }
+  
+ },[data,dispatch,category])
+  
+  useEffect(()=>{
+  if(searchQuery!==""){
+    let filter = [];
+    filter = data.filter(video=>video.title.toLowerCase().includes(searchQuery.toLowerCase()))
+    setVideo(filter)
+    dispatch(clearSearchQuery())
+    setCategory("")
+  }
+  },[searchQuery,data,dispatch]) 
+
+  if(status === "error")
   return <h1 className='mx-auto my-10 text-white'>Error....</h1>
   return (
     <>
@@ -37,9 +54,9 @@ function Home() {
     />
     </div>:
     <div className='flex flex-wrap justify-around mx-auto box-border w-10/12 ml-72 relative top-14'>
-      {filterByCatgory(data,category).map((item)=>{
-        return <Card item={item} />
-      })}       
+      {
+        video.length === 0 ? <VideoNotFound />: video.map(item=> <Card key={item._id} item={item} />)
+      }       
     </div>
     }
    </>

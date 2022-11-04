@@ -3,6 +3,7 @@ import {useDispatch,useSelector} from "react-redux";
 import {getUserAllHistory,clearUserHistory} from "../../store/historySlice";
 import { Ring } from '@uiball/loaders';
 import HistoryCard from '../../component/Card/HistoryCard/HistoryCard';
+import VideoNotFound from '../../component/VideoNotFound/VideoNotFound';
 function History() {
   const dispatch = useDispatch();
   const {history,status} = useSelector((state)=>state.history);
@@ -32,11 +33,12 @@ function History() {
             speed={2} 
             color="#26C281" 
           />
-       </div> :
+       </div> : history.length === 0 ? 
+       <div className='flex  box-border mx-auto w-96	relative '><VideoNotFound /></div>:
        <div className='flex flex-col box-border w-7/12	relative top-28 left-80 '>
           <div className='flex justify-around text-white m-2 '>
               <h2 className='text-xl font-semibold p-2'>Watch History</h2>
-             <button className='px-4 font-semibold' onClick={handleClick}>Clear History</button>
+             <button className='px-4 font-semibold' onClick={handleClick} >Clear History</button>
           </div>
            {history?.map((video)=>{
            return <HistoryCard video={video}/>

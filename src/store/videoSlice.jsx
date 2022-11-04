@@ -13,12 +13,20 @@ const videoSlice = createSlice({
     initialState:{
         data:[],
         status:STATUSES.IDLE,
-        error:""
+        error:"",
+        searchQuery:""
     },
     reducers:{
      clearError:(state)=>{
         state.error = null;
-      } 
+      }, 
+      searchByFilter :(state,action)=>{
+       state.searchQuery = action.payload;
+      },
+      clearSearchQuery:(state)=>{
+        state.searchQuery = ""
+      }
+
     },
     extraReducers:(builders)=>{
         builders
@@ -39,6 +47,8 @@ const videoSlice = createSlice({
 });
 
 export default videoSlice.reducer;
+export const { clearError, searchByFilter, clearSearchQuery } = videoSlice.actions;
+
 export const getAllVideos = createAsyncThunk("fetch/video",async(thunkAPI)=>{
  try{
     const res = await axios.get("http://localhost:5000/api/v1/video");

@@ -11,7 +11,7 @@ export const STATUSES = Object.freeze({
 
 
 const likeSlice = createSlice({
-    name:"slice",
+    name:"like",
     initialState:{
         status:STATUSES.IDLE,
         like:[],
@@ -30,7 +30,7 @@ const likeSlice = createSlice({
         })
         .addCase(getUserLikedVideos.fulfilled,(state,action)=>{
             state.status = STATUSES.IDLE;
-            state.like = action.payload.like;
+            state.like = action.payload.likes;
         })
         .addCase(getUserLikedVideos.rejected,(state,action)=>{
             state.status = STATUSES.IDLE;
@@ -42,7 +42,7 @@ const likeSlice = createSlice({
         })
         .addCase(addToUserLiked.fulfilled,(state,action)=>{
             state.status = STATUSES.IDLE;
-            state.like = action.payload.like;
+            state.like = action.payload.likes;
             toast.success("video added to liked");
         })
         .addCase(addToUserLiked.rejected,(state,action)=>{
@@ -54,8 +54,8 @@ const likeSlice = createSlice({
             state.status = STATUSES.LOADING;
         })
         .addCase(removeFromUserLiked.fulfilled,(state,action)=>{
-            state.status = STATUSES.LOADING;
-            state.like = action.payload.like;
+            state.status = STATUSES.IDLE;
+            state.like = action.payload.likes;
             toast.success("video removed from Liked")
         })
         .addCase(removeFromUserLiked.rejected,(state,action)=>{
@@ -72,7 +72,14 @@ export const {clearError} = likeSlice.actions;
 // fetch user liked videos
 export const getUserLikedVideos = createAsyncThunk("user/like",async(thunkAPI)=>{
     try{
-        const res = await axios.get("http://localhost:5000/api/v1/user/liked");
+        const res = await axios.get("http://localhost:5000/api/v1/user/liked",{
+            withCredentials:true  
+          },
+          {
+          headers: {
+              "Content-Type": "application/json",
+            },
+           });
         return res.data;
     }
     catch(error){
@@ -106,7 +113,7 @@ export const addToUserLiked = createAsyncThunk("user/addToLike",async(video,thun
 
 })
 
-export const removeFromUserLiked = createAsyncThunk("user/addToLike",async(id,thunkAPI)=>{
+export const removeFromUserLiked = createAsyncThunk("user/remvoveFromLike",async(id,thunkAPI)=>{
     try{
         const res = await axios.delete(`http://localhost:5000/api/v1/user/liked/${id}`,
         {

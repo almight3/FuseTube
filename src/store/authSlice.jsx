@@ -76,6 +76,9 @@ export const signupUser = createAsyncThunk("user/signup",async(data,thunkAPI)=>{
         password:password
     },
     {
+        withCredentials:true  
+    },
+    {
         headers: {
             "Content-Type": "application/json",
         },
@@ -94,6 +97,9 @@ export const loginUser = createAsyncThunk("login/user",async(data,thunkAPI)=>{
      const res = await axios.post("http://localhost:5000/api/v1/login",{
         email:email,
         password:password
+     },
+     {
+      withCredentials:true  
      },
      {
         headers: {

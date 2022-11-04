@@ -131,7 +131,7 @@ export const removeFromUserHistory = createAsyncThunk("user/removehisotry",async
     }
 });
 
-export const clearUserHistory = createAsyncThunk("user/clearhisotry",async(thunkAPI)=>{
+export const clearUserHistory = createAsyncThunk("user/clear/hisotry",async(thunkAPI)=>{
     try{
     const res = await axios.delete(`http://localhost:5000/api/v1/user/clear/history`,{
         withCredentials:true  
