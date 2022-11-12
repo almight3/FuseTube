@@ -28,14 +28,24 @@ function Home() {
      }
   
  },[data,dispatch,category])
-  
+   
+
   useEffect(()=>{
   if(searchQuery!==""){
     let filter = [];
     filter = data.filter(video=>video.title.toLowerCase().includes(searchQuery.toLowerCase()))
     setVideo(filter)
-    dispatch(clearSearchQuery())
     setCategory("")
+    timer()
+  }
+  function  timer(){
+    setTimeout(() => {
+    dispatch(clearSearchQuery())
+    }, 1000)
+  }
+  
+  if(searchQuery===""){
+    return ()=>clearTimeout(timer)
   }
   },[searchQuery,data,dispatch]) 
 
