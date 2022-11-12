@@ -1,7 +1,7 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
+import fuzetubeApi from './api';
 
 export const STATUSES = Object.freeze({
     IDLE:"idle",
@@ -72,7 +72,7 @@ export const {clearError} = likeSlice.actions;
 // fetch user liked videos
 export const getUserLikedVideos = createAsyncThunk("user/like",async(thunkAPI)=>{
     try{
-        const res = await axios.get("http://localhost:5000/api/v1/user/liked",{
+        const res = await axios.get(`${fuzetubeApi}/api/v1/user/liked`,{
             withCredentials:true  
           },
           {
@@ -92,7 +92,7 @@ export const getUserLikedVideos = createAsyncThunk("user/like",async(thunkAPI)=>
 
 export const addToUserLiked = createAsyncThunk("user/addToLike",async(video,thunkAPI)=>{
     try{
-        const res = await axios.post("http://localhost:5000/api/v1/user/liked",{
+        const res = await axios.post(`${fuzetubeApi}/api/v1/user/liked`,{
          video 
         },
         {
@@ -115,7 +115,7 @@ export const addToUserLiked = createAsyncThunk("user/addToLike",async(video,thun
 
 export const removeFromUserLiked = createAsyncThunk("user/remvoveFromLike",async(id,thunkAPI)=>{
     try{
-        const res = await axios.delete(`http://localhost:5000/api/v1/user/liked/${id}`,
+        const res = await axios.delete(`${fuzetubeApi}/api/v1/user/liked/${id}`,
         {
           withCredentials:true  
         },

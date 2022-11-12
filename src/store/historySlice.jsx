@@ -1,6 +1,7 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import fuzetubeApi from './api';
 
 export const STATUSES = Object.freeze({
     IDLE:"idle",
@@ -78,7 +79,7 @@ export default historySlice.reducer;
 export const { clearError } = historySlice.actions;
 export const getUserAllHistory = createAsyncThunk("user/history",async(thunkAPI)=>{
     try{
-        const res = await axios.get("http://localhost:5000/api/v1/user/history",{
+        const res = await axios.get(`${fuzetubeApi}/api/v1/user/history`,{
             withCredentials:true  
         },
         {
@@ -96,7 +97,7 @@ export const getUserAllHistory = createAsyncThunk("user/history",async(thunkAPI)
 export const addToUserHisotry = createAsyncThunk("user/addhistory",async(video,thunkAPI)=>{
  try{
     console.log(video)
-    const res = await axios.post("http://localhost:5000/api/v1/user/history",{
+    const res = await axios.post(`${fuzetubeApi}/api/v1/user/history`,{
     video
     },
     {
@@ -116,7 +117,7 @@ export const addToUserHisotry = createAsyncThunk("user/addhistory",async(video,t
 
 export const removeFromUserHistory = createAsyncThunk("user/removehisotry",async(id,thunkAPI)=>{
     try{
-    const res = await axios.delete(`http://localhost:5000/api/v1/user/history/${id}`,{
+    const res = await axios.delete(`${fuzetubeApi}/api/v1/user/history/${id}`,{
         withCredentials:true  
     },
     {
@@ -133,7 +134,7 @@ export const removeFromUserHistory = createAsyncThunk("user/removehisotry",async
 
 export const clearUserHistory = createAsyncThunk("user/clear/hisotry",async(thunkAPI)=>{
     try{
-    const res = await axios.delete(`http://localhost:5000/api/v1/user/clear/history`,{
+    const res = await axios.delete(`${fuzetubeApi}/api/v1/user/clear/history`,{
         withCredentials:true  
     },
     {

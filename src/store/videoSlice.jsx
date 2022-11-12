@@ -1,7 +1,7 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
+import fuzetubeApi from "./api.js";
 
 export const STATUSES = Object.freeze({
     IDLE:"idle",
@@ -51,7 +51,9 @@ export const { clearError, searchByFilter, clearSearchQuery } = videoSlice.actio
 
 export const getAllVideos = createAsyncThunk("fetch/video",async(thunkAPI)=>{
  try{
-    const res = await axios.get("http://localhost:5000/api/v1/video");
+    const url = `${fuzetubeApi}/api/v1/video`
+    console.log(url)
+    const res = await axios.get(url);
     return res.data
  }
  catch(error){

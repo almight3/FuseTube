@@ -1,6 +1,7 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import fuzetubeApi from "./api";
 
 export const STATUSES = Object.freeze({
     IDLE:"idle",
@@ -70,13 +71,11 @@ export const {clearError} = authSlice.actions;
 export const signupUser = createAsyncThunk("user/signup",async(data,thunkAPI)=>{
    try{
     const {username,email,password,navigate} = data;
-    const res = await axios.post("http://localhost:5000/api/v1/register",{
+    
+    const res = await axios.post(`${fuzetubeApi}/api/v1/register`,{
         username:username,
         email:email,
         password:password
-    },
-    {
-        withCredentials:true  
     },
     {
         headers: {
@@ -94,12 +93,9 @@ export const signupUser = createAsyncThunk("user/signup",async(data,thunkAPI)=>{
 export const loginUser = createAsyncThunk("login/user",async(data,thunkAPI)=>{
     try{
      const {email,password,navigate} = data;
-     const res = await axios.post("http://localhost:5000/api/v1/login",{
+     const res = await axios.post(`${fuzetubeApi}/api/v1/login`,{
         email:email,
         password:password
-     },
-     {
-      withCredentials:true  
      },
      {
         headers: {
@@ -116,7 +112,7 @@ export const loginUser = createAsyncThunk("login/user",async(data,thunkAPI)=>{
 
 export const logoutUser = createAsyncThunk("logout/user",async(thunkAPI)=>{
     try{
-     const res = await axios.get("http://localhost:5000/api/v1/logout")
+     const res = await axios.get(`${fuzetubeApi}/api/v1/logout`)
      return res.data
     }
     catch(error){

@@ -1,7 +1,7 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
+import fuzetubeApi from './api';
 
 export const STATUSES = Object.freeze({
     IDLE:"idle",
@@ -72,7 +72,7 @@ export const {clearError} = watchLaterSlice.actions;
 // fetch  videos in watch later
 export const getUserWatchlater = createAsyncThunk("user/watchlater",async(thunkAPI)=>{
     try{
-        const res = await axios.get("http://localhost:5000/api/v1/user/watchlater",{
+        const res = await axios.get(`{fuzetubeApi}/api/v1/user/watchlater`,{
             withCredentials:true  
           },
           {
@@ -92,7 +92,7 @@ export const getUserWatchlater = createAsyncThunk("user/watchlater",async(thunkA
 
 export const addToWatchLater = createAsyncThunk("user/addToWatchLater",async(video,thunkAPI)=>{
     try{
-        const res = await axios.post("http://localhost:5000/api/v1/user/watchlater",{
+        const res = await axios.post(`{fuzetubeApi}/api/v1/user/watchlater`,{
          video 
         },
         {
@@ -116,7 +116,7 @@ export const addToWatchLater = createAsyncThunk("user/addToWatchLater",async(vid
 // remove from watch later
 export const removeWatchLater = createAsyncThunk("user/remvoveFromWatchLater",async(id,thunkAPI)=>{
     try{
-        const res = await axios.delete(`http://localhost:5000/api/v1/user/watchlater/${id}`,
+        const res = await axios.delete(`${fuzetubeApi}/api/v1/user/watchlater/${id}`,
         {
           withCredentials:true  
         },
