@@ -93,7 +93,7 @@ export const signupUser = createAsyncThunk("user/signup",async(data,thunkAPI)=>{
 });
 export const loginUser = createAsyncThunk("login/user",async(data,thunkAPI)=>{
     try{
-     const {email,password} = data;
+     const {email,password,navigate} = data;
      const res = await axios.post("http://localhost:5000/api/v1/login",{
         email:email,
         password:password
@@ -106,6 +106,7 @@ export const loginUser = createAsyncThunk("login/user",async(data,thunkAPI)=>{
             "Content-Type": "application/json",
         },
      })
+     navigate(-1)
      return res.data
     }
     catch(error){
