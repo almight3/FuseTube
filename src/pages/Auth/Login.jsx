@@ -1,5 +1,5 @@
 import {useState,useEffect} from 'react';
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import {useDispatch,useSelector} from "react-redux";
 import {loginUser,clearError} from "../../store/authSlice";
 function Login() {
@@ -7,6 +7,7 @@ function Login() {
   const [password,setPassword] = useState('');
   const {status,error} = useSelector((state)=>state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   
 
   useEffect(()=>{
@@ -19,7 +20,7 @@ function Login() {
 
   const handleSubmit = (e)=>{
    e.preventDefault();
-   dispatch(loginUser({email,password}));
+   dispatch(loginUser({email,password,navigate}));
   }
 
   
