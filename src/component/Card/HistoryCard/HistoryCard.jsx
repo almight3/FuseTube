@@ -3,12 +3,12 @@ import "./HistoryCard.css";
 import {MdDelete} from "react-icons/md";
 import {removeFromUserHistory} from "../../../store/historySlice";
 import {useDispatch} from "react-redux";
-function HistoryCard({video}){
+function HistoryCard({video,token}){
   
   const dispatch = useDispatch();
   
   const handleClick = ()=>{
-    dispatch(removeFromUserHistory(video._id))
+    dispatch(removeFromUserHistory({id:video._id,token}))
   }
    
   return (

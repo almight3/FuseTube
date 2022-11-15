@@ -1,16 +1,17 @@
 import React from 'react'
 import {MdOutlineWatchLater} from "react-icons/md";
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch,useSelector} from "react-redux";
 import {addToWatchLater} from "../../store/watchLaterSlice";
 function Card({item}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {token} = useSelector(state=>state.user)
   const handelClick = ()=>{
   navigate(`/video/${item._id}`) 
   }
   const handleWatchLater = ()=>{
-    dispatch(addToWatchLater(item))
+    dispatch(addToWatchLater({video:item,token}))
   }
 
   return (

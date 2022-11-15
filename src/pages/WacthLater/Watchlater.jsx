@@ -6,11 +6,13 @@ import AdvanceCard from '../../component/Card/AdvanceCard/AdvanceCard';
 import VideoNotFound from '../../component/VideoNotFound/VideoNotFound';
 function Watchlater() {
   const {status,watchLater} = useSelector(state=>state.watchLater);
+  const {token} = useSelector(state=>state.user);
+
   const dispatch = useDispatch();
   
   useEffect(()=>{
-  dispatch(getUserWatchlater())
-  },[dispatch])
+  dispatch(getUserWatchlater(token))
+  },[dispatch,token])
 
   return (
     <>

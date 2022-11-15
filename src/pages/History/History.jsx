@@ -7,15 +7,19 @@ import VideoNotFound from '../../component/VideoNotFound/VideoNotFound';
 function History() {
   const dispatch = useDispatch();
   const {history,status} = useSelector((state)=>state.history);
-  
+  const {token} = useSelector(state=>state.user);
+   
+  function fetchUserHistory(dispatch,token){
+    dispatch(getUserAllHistory(token))
+  }
   // fetching user history
   useEffect(() => {
-  dispatch(getUserAllHistory()) 
-  },[dispatch]);
+    fetchUserHistory(dispatch,token)
+  },[dispatch,token]);
 
   // clear user history
   const handleClick = ()=>{
-    dispatch(clearUserHistory())
+    dispatch(clearUserHistory(token))
   }
 
   
@@ -41,7 +45,7 @@ function History() {
              <button className='px-4 font-semibold' onClick={handleClick} >Clear History</button>
           </div>
            {history?.map((video)=>{
-           return <HistoryCard video={video}/>
+           return <HistoryCard video={video} token={token} />
         })}
        </div>
       }

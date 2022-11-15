@@ -1,3 +1,3 @@
-const fuzetubeApi = "https://clumsy-lion-earmuffs.cyclic.app"
+const FUZETUBEAPI = "https://clumsy-lion-earmuffs.cyclic.app";
 
-export default fuzetubeApi
+export default FUZETUBEAPI

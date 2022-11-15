@@ -2,6 +2,8 @@
   "name": "videolibrary",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000",
+
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
     "@testing-library/jest-dom": "^5.16.5",
@@ -48,7 +50,7 @@
     "autoprefixer": "^10.4.12",
     "postcss": "^8.4.18",
     "tailwindcss": "^3.1.8"
-  },
-  "proxy": "http://localhost:5000/"
+  }
+ 
 
 }

@@ -1,8 +1,7 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import fuzetubeApi from './api';
-
+import FUZETUBEAPI from './api';
 export const STATUSES = Object.freeze({
     IDLE:"idle",
     ERROR:"error",
@@ -70,15 +69,14 @@ const likeSlice = createSlice({
 export default likeSlice.reducer;
 export const {clearError} = likeSlice.actions;
 // fetch user liked videos
-export const getUserLikedVideos = createAsyncThunk("user/like",async(thunkAPI)=>{
+export const getUserLikedVideos = createAsyncThunk("user/like",async(token,thunkAPI)=>{
     try{
-        const res = await axios.get(`${fuzetubeApi}/api/v1/user/liked`,{
-            withCredentials:true  
-          },
+        const res = await axios.get(`${FUZETUBEAPI}/api/v1/user/liked`,
           {
-          headers: {
-              "Content-Type": "application/json",
-            },
+            headers:{
+                "Content-type":"application/json",
+                "authorization":`bearer ${token}`
+            }
            });
         return res.data;
     }
@@ -90,17 +88,16 @@ export const getUserLikedVideos = createAsyncThunk("user/like",async(thunkAPI)=>
 
 // add in user liked videos
 
-export const addToUserLiked = createAsyncThunk("user/addToLike",async(video,thunkAPI)=>{
+export const addToUserLiked = createAsyncThunk("user/addToLike",async(data,thunkAPI)=>{
     try{
-        const res = await axios.post(`${fuzetubeApi}/api/v1/user/liked`,{
+        const {video,token} = data
+        const res = await axios.post(`${FUZETUBEAPI}/api/v1/user/liked`,{
          video 
-        },
-        {
-          withCredentials:true  
         },
         {
         headers: {
             "Content-Type": "application/json",
+            "authorization":`bearer ${token}`
           },
          }
         );
@@ -113,15 +110,14 @@ export const addToUserLiked = createAsyncThunk("user/addToLike",async(video,thun
 
 })
 
-export const removeFromUserLiked = createAsyncThunk("user/remvoveFromLike",async(id,thunkAPI)=>{
+export const removeFromUserLiked = createAsyncThunk("user/remvoveFromLike",async(data,thunkAPI)=>{
     try{
-        const res = await axios.delete(`${fuzetubeApi}/api/v1/user/liked/${id}`,
-        {
-          withCredentials:true  
-        },
+        const {id,token} = data;
+        const res = await axios.delete(`${FUZETUBEAPI}/api/v1/user/liked/${id}`,
         {
         headers: {
             "Content-Type": "application/json",
+            "authorization":`bearer ${token}`
           },
          }
         );

@@ -1,1 +1,0 @@
-export const api = "https://clumsy-lion-earmuffs.cyclic.app/"

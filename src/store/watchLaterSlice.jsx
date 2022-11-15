@@ -1,8 +1,7 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import fuzetubeApi from './api';
-
+import FUZETUBEAPI from './api';
 export const STATUSES = Object.freeze({
     IDLE:"idle",
     ERROR:"error",
@@ -70,14 +69,13 @@ const watchLaterSlice = createSlice({
 export default watchLaterSlice.reducer;
 export const {clearError} = watchLaterSlice.actions;
 // fetch  videos in watch later
-export const getUserWatchlater = createAsyncThunk("user/watchlater",async(thunkAPI)=>{
+export const getUserWatchlater = createAsyncThunk("user/watchlater",async(token,thunkAPI)=>{
     try{
-        const res = await axios.get(`{fuzetubeApi}/api/v1/user/watchlater`,{
-            withCredentials:true  
-          },
+        const res = await axios.get(`${FUZETUBEAPI}/api/v1/user/watchlater`,
           {
           headers: {
               "Content-Type": "application/json",
+              "authorization":`bearer ${token}`
             },
            });
         return res.data;
@@ -90,17 +88,17 @@ export const getUserWatchlater = createAsyncThunk("user/watchlater",async(thunkA
 
 // add to watchlater
 
-export const addToWatchLater = createAsyncThunk("user/addToWatchLater",async(video,thunkAPI)=>{
+export const addToWatchLater = createAsyncThunk("user/addToWatchLater",async(data,thunkAPI)=>{
     try{
-        const res = await axios.post(`{fuzetubeApi}/api/v1/user/watchlater`,{
+
+        const {video,token} = data;
+        const res = await axios.post(`${FUZETUBEAPI}/api/v1/user/watchlater`,{
          video 
-        },
-        {
-          withCredentials:true  
         },
         {
         headers: {
             "Content-Type": "application/json",
+            "authorization":`bearer ${token}`
           },
          }
         );
@@ -114,15 +112,14 @@ export const addToWatchLater = createAsyncThunk("user/addToWatchLater",async(vid
 })
 
 // remove from watch later
-export const removeWatchLater = createAsyncThunk("user/remvoveFromWatchLater",async(id,thunkAPI)=>{
+export const removeWatchLater = createAsyncThunk("user/remvoveFromWatchLater",async(data,thunkAPI)=>{
     try{
-        const res = await axios.delete(`${fuzetubeApi}/api/v1/user/watchlater/${id}`,
-        {
-          withCredentials:true  
-        },
+        const {id,token} = data;
+        const res = await axios.delete(`${FUZETUBEAPI}/api/v1/user/watchlater/${id}`,
         {
         headers: {
             "Content-Type": "application/json",
+            "authorization":`bearer ${token}`
           },
          }
         );

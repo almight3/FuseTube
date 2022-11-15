@@ -1,11 +1,12 @@
 import React from 'react'
 import {MdDelete} from "react-icons/md";
-import {useDispatch} from "react-redux";
+import {useDispatch,useSelector} from "react-redux";
 
 function AdvanceCard({video,dispatchFunc}){
    const dispatch = useDispatch();
+   const { token } = useSelector(state=>state.user);
    const handleClick = ()=>{
-    dispatch(dispatchFunc(video._id))
+    dispatch(dispatchFunc({id:video._id, token}))
    } 
   return (
     <div className='flex flex-row align-center w-full text-white card-border cursor-pointer'>

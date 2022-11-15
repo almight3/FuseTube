@@ -7,10 +7,12 @@ import VideoNotFound from '../../component/VideoNotFound/VideoNotFound';
 
 function Liked() {
   const dispatch = useDispatch();
+  const {token} = useSelector((state)=>state.user);
+
   const {status,like} = useSelector(state=>state.like);
   useEffect(()=>{
-  dispatch(getUserLikedVideos())
-  },[dispatch])
+  dispatch(getUserLikedVideos(token))
+  },[dispatch,token])
 
   return (
     <>
