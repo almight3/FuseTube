@@ -11,49 +11,26 @@ function Home() {
   const dispatch = useDispatch();
   const {data,status,searchQuery} = useSelector((state)=>state.video);
   const [category,setCategory] = useState("All");
-  const [video,setVideo] = useState([]);
+  // const [video,setVideo] = useState([]);
+  let video = data;
+  
   useEffect(()=>{
   dispatch(getAllVideos())
   },[dispatch])
-  
-  useEffect(()=>{
-    
-     if(category==="All"){
-      setVideo(data)
-     }  
-     else{
-     let filter = [];
-     filter = data.filter(video=>video.category === category);
-     setVideo(filter)
-     }
-  
- },[data,dispatch,category])
-   
 
-  useEffect(()=>{
-  if(searchQuery!==""){
-    let filter = [];
-    filter = data.filter(video=>video.title.toLowerCase().includes(searchQuery.toLowerCase()))
-    setVideo(filter)
-    setCategory("")
-    timer()
-  }
-  function  timer(){
-    setTimeout(() => {
-    dispatch(clearSearchQuery())
-    }, 1000)
-  }
-  
-  if(searchQuery===""){
-    return ()=>clearTimeout(timer)
-  }
-  },[searchQuery,data,dispatch]) 
+  if(category!=="All"){
+     video = data.filter(d=>d.category===category)
+   }
+    if(searchQuery!==""){
+     video = data.filter(d=>d.title.toLowerCase().includes(searchQuery.toLowerCase()))
+   }
+
 
   if(status === "error")
   return <h1 className='mx-auto my-10 text-white'>Error....</h1>
   return (
     <>
-    <Category setCategory={setCategory} />
+    <Category setCategory={setCategory} clearSearch={ clearSearchQuery } dispatch={dispatch} />
     {status ==="loading" ?  
     <div className='m-auto	mt-80 w-28'>
     <Ring 
