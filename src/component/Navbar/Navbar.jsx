@@ -6,7 +6,7 @@ import {searchByFilter} from "../../store/videoSlice";
 import {MdSearch} from "react-icons/md";
 function Navbar() {
   const {isAuthenticated} = useSelector((state)=>state.user);
-  const [search,setSearch] = useState("");
+  const [search,setSearch] = useState(" ");
   const dispatch = useDispatch();
   const logoutHandle=()=>{
     dispatch(logoutUser())
@@ -14,7 +14,7 @@ function Navbar() {
 
   const onSearchFilter = ()=>{
     dispatch(searchByFilter(search))
-    setSearch("")  
+    setSearch("")
   }
 
 
