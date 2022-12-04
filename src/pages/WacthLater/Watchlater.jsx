@@ -11,8 +11,10 @@ function Watchlater() {
   const dispatch = useDispatch();
   
   useEffect(()=>{
-  dispatch(getUserWatchlater(token))
-  },[dispatch,token])
+    if(watchLater.length===0){
+      dispatch(getUserWatchlater(token))
+    }
+  },[dispatch,token,watchLater])
 
   return (
     <>

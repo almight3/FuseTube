@@ -14,8 +14,10 @@ function History() {
   }
   // fetching user history
   useEffect(() => {
-    fetchUserHistory(dispatch,token)
-  },[dispatch,token]);
+    if(history.length===0){
+      fetchUserHistory(dispatch,token)
+   }
+  },[dispatch,token,history]);
 
   // clear user history
   const handleClick = ()=>{

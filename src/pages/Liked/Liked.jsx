@@ -11,8 +11,10 @@ function Liked() {
 
   const {status,like} = useSelector(state=>state.like);
   useEffect(()=>{
-  dispatch(getUserLikedVideos(token))
-  },[dispatch,token])
+    if(like.length === 0){
+      dispatch(getUserLikedVideos(token))
+    }
+  },[dispatch,token,like])
 
   return (
     <>
